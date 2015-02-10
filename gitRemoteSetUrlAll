@@ -1,0 +1,17 @@
+#!/bin/bash
+
+git_sub_function(){
+temp=${1:2}
+
+CWD=$(pwd)
+echo "Currently in :"
+echo $CWD
+echo "about to do the following command:"
+echo git remote set-url origin $0$temp
+
+git --git-dir=$1/.git --work-tree=$1 remote set-url origin  $0$temp
+}
+
+
+export -f git_sub_function
+find $CWD -mindepth 1 -maxdepth 1 -type d -exec bash -c  'git_sub_function $1 "$2"'   $1 {} \;
